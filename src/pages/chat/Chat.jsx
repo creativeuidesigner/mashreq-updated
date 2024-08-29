@@ -1,7 +1,7 @@
 import { useState, useEffect, useRef, useLayoutEffect, useMemo } from "react";
 import axios from "axios";
 import style from "./chat.module.css";
-import logo from "../login/logo.png";
+import logo from "../login/logo.svg";
 import toggleBar from "./images/bars-icon.svg";
 import xIcon from "./images/xIcon.svg";
 import sendIcon from "./images/send-icon.svg";
