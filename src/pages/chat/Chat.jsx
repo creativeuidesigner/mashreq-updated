@@ -7,7 +7,7 @@ import xIcon from "./images/xIcon.svg";
 import sendIcon from "./images/send-icon.svg";
 import micIcon from "./images/mic-icon.svg";
 import attachIcon from "./images/attachIcon.svg";
-import authorIcon from "./images/author-icon.png";
+import authorIcon from "./images/author-icon.svg";
 import bigMicIcon from "./images/big-micIcon.svg";
 import databaseIcon from "./images/databaseIcon.svg";
 import documentIcon from "./images/documentIcon.svg";
