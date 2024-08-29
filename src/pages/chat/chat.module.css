@@ -1,0 +1,931 @@
+/* Base Styles */
+.container {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: "Avenir", sans-serif;
+  display: flex;
+  height: 100vh;
+  position: relative;
+  background: #393939;
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+
+/* Sidebar Styles */
+.sidepanel {
+  width: 360px;
+  background: #252525;
+  display: flex;
+  flex-direction: column;
+  /* position: fixed; */
+  left: 0;
+  z-index: 99;
+  height: 100%;
+  transform: translateX(0);
+  transition: transform 0.3s ease;
+}
+
+.sidepanel.hidden {
+  transform: translateX(-100%);
+}
+
+.sidepanel.hidden .innerList,
+.sidepanel.hidden .bottomUser {
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.innerList {
+  margin: 56px 48px auto 48px;
+}
+
+.chatContainer {
+  height: 67vh;
+  overflow-y: auto;
+}
+
+.chatContainer::-webkit-scrollbar {
+  display: none;
+}
+
+.logoDiv {
+  display: flex;
+  flex-direction: column;
+  align-items: start;
+}
+
+.logoDiv div {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+}
+
+.logoDiv .toggle {
+  align-self: center;
+  cursor: pointer;
+  background-color: transparent;
+  border: 1px solid #fff;
+  border-radius: 5px;
+  padding: 5px 11px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  transition: left 0.3s ease;
+}
+
+.logoDiv .toggle img {
+  fill: #fff;
+  width: 18px;
+}
+
+.welcomeMessage {
+  width: 180px;
+  margin: 0;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.logo {
+  width: 150px;
+  z-index: 1000;
+  position: fixed;
+  top: 55px;
+  left: 50px;
+}
+
+.toggle {
+  z-index: 1000;
+  position: fixed;
+  top: 20px;
+  left: 380px; /* Adjusted based on sidebar width */
+  cursor: pointer;
+  background-color: #5a5a5a;
+  border: none;
+  border-radius: 5px;
+  padding: 5px 11px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  transition: left 0.3s ease;
+}
+
+.toggle:active {
+  transform: scale(0.9);
+}
+
+.toggle img {
+  width: 18px;
+}
+
+.logoDiv p {
+  margin-top: 112px;
+  margin-bottom: 5px;
+  color: #f5f5f5;
+  font-family: Avenir;
+  font-size: 22px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: normal;
+}
+
+.newChatContainer {
+  display: flex;
+  flex-direction: column;
+  margin-top: 7rem;
+}
+
+.newChatName {
+  margin: 20px 0;
+  cursor: pointer;
+  color: #f5f5f5;
+  font-family: Avenir;
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: normal;
+}
+
+.newChat {
+  display: flex;
+  height: 56px;
+  padding: 12px 16px;
+  justify-content: space-between;
+  align-items: center;
+  align-self: stretch;
+  border-radius: 10px;
+  border: none;
+  background: #ff5e00;
+  backdrop-filter: blur(12px);
+  transition: all 300ms ease;
+}
+
+.newChat:active {
+  transform: scale(0.97);
+}
+
+.newChat span {
+  color: #fff;
+  font-family: Avenir;
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: normal;
+}
+
+.activeChat {
+  display: flex;
+  cursor: pointer;
+  height: 56px;
+  padding: 12px 16px;
+  justify-content: space-between;
+  align-items: center;
+  align-self: stretch;
+  border: none;
+  backdrop-filter: blur(12px);
+  border-radius: 8px;
+  background: rgba(255, 255, 255, 0.1);
+  transition: all 300ms ease;
+}
+
+.activeChat:active {
+  transform: scale(0.97);
+}
+
+.activeChat span {
+  color: #f5f5f5;
+  font-family: Avenir;
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: normal;
+}
+
+.listContainer {
+  margin-top: 2rem;
+}
+
+.listContainer p {
+  color: #f5f5f5;
+  font-family: Avenir;
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: normal;
+  opacity: 0.8;
+}
+
+.listContainer ul {
+  list-style: none;
+  padding-left: 1rem;
+}
+
+.listContainer ul li {
+  width: 250px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  cursor: pointer;
+  height: 51px;
+  color: #f5f5f5;
+  font-family: Avenir;
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: normal;
+}
+
+.bottomUser {
+  position: absolute;
+  width: 100%;
+  bottom: 0;
+}
+
+.userDiv {
+  padding: 55px 44px;
+  background: linear-gradient(180deg, rgba(37, 37, 37, 0) 0%, #252525 13.65%);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.userDiv div {
+  display: flex;
+  align-items: center;
+  gap: 0.8rem;
+}
+
+.logout {
+  cursor: pointer;
+}
+
+.userDiv p {
+  color: #f5f5f5;
+  font-family: Avenir;
+  font-size: 20px;
+  font-style: normal;
+  font-weight: 500;
+  letter-spacing: 0.5px;
+  line-height: normal;
+}
+
+/* Main Container Styles */
+.mainSection {
+  width: 80%;
+  height: 100%;
+  margin-left: auto;
+  /* background-image: url("../../assets/images/BG.png"); */
+  background-repeat: no-repeat;
+  background-size: cover;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  box-sizing: border-box;
+  justify-content: space-between;
+}
+
+.mainPadding {
+  overflow-y: auto;
+  flex: 1;
+  padding-top: 40px;
+}
+
+.scrollingDiv {
+  width: 100%;
+  height: 100%;
+  overflow-y: auto;
+  margin: 0 auto 0 auto;
+}
+
+.scrollingDiv::-webkit-scrollbar {
+  display: none;
+}
+
+.scrollingDiv {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+.scrollingDiv .chatDiv {
+  width: 1000px;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+}
+
+.message {
+  width: 1050px;
+  margin: 0 auto 20px auto;
+  font-size: 1em;
+  position: relative;
+}
+
+.message.bot {
+  margin: 0 auto 50px auto;
+  text-align: left;
+  display: flex;
+  align-items: start;
+  gap: 8px;
+}
+
+.companyLogo {
+  position: absolute;
+  left: -43px;
+  top: 0px;
+}
+
+.message p {
+  display: inline-block;
+  padding: 10px;
+  border-radius: 10px;
+  max-width: 100%;
+  word-wrap: break-word;
+}
+
+.message img {
+  margin-top: 21px;
+}
+
+.regenerateButton {
+  position: relative;
+  border-radius: 10px;
+  border: none;
+  background: transparent;
+  padding: 6px 10px;
+  font-family: Avenir;
+  text-align: center;
+}
+
+.regenerateButton:hover span,
+.copyButton:hover span {
+  display: block;
+}
+
+.regenerateButton span {
+  display: none;
+  position: absolute;
+  left: -30px;
+  bottom: -32px;
+  background-color: white;
+  font-size: 15px;
+  padding: 4px 10px;
+  border-radius: 6px;
+}
+
+.copyButtonDiv {
+  display: flex;
+  gap: 4px;
+}
+
+.copyButton {
+  border-radius: 10px;
+  cursor: pointer;
+  border: none;
+  background: transparent;
+  padding: 6px 10px;
+  font-family: Avenir;
+}
+
+.copyButton span {
+  display: none;
+  position: absolute;
+  left: 50px;
+  bottom: -20px;
+  background-color: white;
+  color: #252525;
+  font-size: 15px;
+  padding: 4px 10px;
+  border-radius: 6px;
+}
+
+.message.user p {
+  display: flex;
+  margin-left: auto;
+  width: 70%;
+  word-break: break-all;
+  white-space: normal;
+  padding: 12px 16px;
+  border-radius: 10px;
+  background: rgba(255, 255, 255, 0.2);
+  backdrop-filter: blur(12px);
+  color: #f5f5f5;
+}
+
+.message.bot p {
+  color: #f5f5f5;
+}
+
+.rightsideChat {
+  display: flex;
+  align-items: center;
+  align-self: flex-end;
+  width: 643px;
+  padding: 12px 16px;
+  border-radius: 10px;
+  background: rgba(255, 255, 255, 0.2);
+  backdrop-filter: blur(12px);
+  gap: 32px;
+  flex-shrink: 0;
+}
+
+.rightsideChat p {
+  color: #f5f5f5;
+  font-family: Avenir;
+  font-size: 16px;
+  font-style: normal;
+  line-height: 27px;
+  font-weight: 500;
+  margin: 0;
+}
+
+.leftsideChat {
+  display: flex;
+  gap: 1rem;
+  align-items: start;
+  align-self: flex-start;
+}
+
+.leftsideChat p {
+  color: #f5f5f5;
+  margin: 0;
+  margin-bottom: 2rem;
+  font-family: Avenir;
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: 32px;
+}
+
+.searchBarContainer {
+  margin-top: auto;
+  position: sticky;
+  bottom: 0;
+  padding: 0 0 60px 0;
+  display: flex;
+  justify-content: center;
+}
+
+.searchBarContainer .customSelect .selectedOption {
+  border-radius: 8px;
+  background: #393939;
+  padding: 8px;
+  color: #f5f5f5;
+  cursor: pointer;
+}
+
+.searchBarContainer .customSelect .optionsList {
+  position: absolute;
+  padding: 4px;
+  background: #252525;
+  box-shadow: 0px 0px 30px 0px rgba(0, 0, 0, 0.1);
+  border: none;
+  top: -103px;
+  right: 61px;
+  border-radius: 8px;
+}
+
+.searchBarContainer .customSelect .optionsList .option {
+  display: flex;
+  gap: 5px;
+  align-items: center;
+  padding: 10px 8px;
+  background: #252525;
+  cursor: pointer;
+  border-radius: 8px;
+}
+
+.searchBarContainer .customSelect .optionsList .option:hover {
+  background: #1b1b1b;
+}
+
+.searchBarContainer .selectedOption {
+  display: flex;
+  gap: 8px;
+}
+
+.searchBar {
+  width: 1000px;
+  display: flex;
+  bottom: -100px;
+  padding: 12px 16px;
+  gap: 1rem;
+  border-radius: 10px;
+  background: #252525;
+  backdrop-filter: blur(12px);
+  border: none;
+}
+
+.searchBar input {
+  width: 100%;
+  color: #f5f5f5;
+  font-family: Avenir;
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: normal;
+  letter-spacing: 0.7px;
+  background-color: transparent;
+  outline: none;
+  border: none;
+}
+
+.searchBar input::placeholder {
+  color: #f5f5f57e;
+  font-family: Avenir;
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: normal;
+}
+
+.searchBar .micIcon,
+.sendIcon {
+  border-radius: 10px;
+  border: none;
+  background: #393939;
+  backdrop-filter: blur(12px);
+  padding: 12px 16px;
+  display: flex;
+  width: 40px;
+  height: 40px;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 32px;
+}
+
+.searchBar .attachIcon {
+  position: relative;
+  border-radius: 10px;
+  border: none;
+  background: transparent;
+  padding: 12px 16px;
+  display: flex;
+  width: 40px;
+  height: 40px;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.searchBar .attachIcon input {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  opacity: 0;
+  cursor: pointer;
+}
+
+.searchBar .attachIcon input::-webkit-file-upload-button {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  opacity: 0;
+  cursor: pointer;
+}
+
+.chart-container {
+  width: 100%;
+  max-width: 600px;
+  margin: 20px auto;
+}
+
+.modal .modalBody {
+  background: #393939;
+  color: #fff;
+  height: 200px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 20px;
+}
+
+/* Media Queries for Responsiveness */
+
+@media only screen and (min-width: 769px)and (max-width: 1000px) {
+  .scrollingDiv .chatDiv{
+    width: 100%;
+  }
+  .scrollingDiv .chatDiv {
+    padding: 0 20px;
+  }
+  /* .mainSection{
+    width: 100%;
+  } */
+  .searchBarContainer {
+    padding: 0 20px 30px 20px;
+  }
+  .mainPadding{
+    padding-top: 70px;
+  }
+}
+
+@media (max-width: 768px) {
+  .loaderLogo {
+    margin: 0rem !important;
+  }
+
+  .logo {
+    width: 130px;
+    z-index: 1000;
+    position: fixed;
+    top: 5px;
+    left: 75%;
+  }
+  .sidepanel {
+    width: 100%;
+  }
+  .toggle {
+    left: 25px !important;
+  }
+  .innerList {
+    margin: 56px 24px auto 24px;
+  }
+  .logoDiv p {
+    margin-top: 56px;
+    font-size: 18px;
+  }
+  .newChatContainer{
+    margin-top: 3rem;
+  }
+  .newChatContainer .newChat,
+  .newChatContainer .activeChat {
+    height: 48px;
+    padding: 10px 12px;
+  }
+  .newChatContainer .newChat span,
+  .newChatContainer .activeChat span {
+    font-size: 14px;
+  }
+  .listContainer ul li {
+    width: 100%;
+  }
+  .bottomUser .userDiv {
+    padding: 40px 24px;
+  }
+  .userDiv p {
+    font-size: 18px;
+  }
+  .mainPadding {
+    padding-top: 75px;
+  }
+  .message {
+    width: 90%;
+  }
+  .rightsideChat {
+    width: 80%;
+  }
+  .searchBarContainer {
+    padding: 0 50px 30px 50px;
+  }
+
+  .searchBarContainer form {
+    width: 100%;
+  }
+  .searchBar {
+    width: 80%;
+  }
+  .scrollingDiv .chatDiv {
+    width: 100%;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    padding: 0 50px;
+  }
+  .companyLogo {
+    position: absolute;
+    left: -43px;
+    top: 0;
+  }
+}
+
+/* Extra small devices (phones, 600px and down) */
+@media (max-width: 600px) {
+  .message .loaderContainer {
+    flex-direction: column-reverse !important;
+  }
+  .logo {
+    width: 130px;
+    z-index: 1000;
+    position: fixed;
+    top: 5px;
+    left: 65%;
+  }
+  .sidepanel {
+    width: 100% !important;
+  }
+  .toggle {
+    left: 15px !important;
+  }
+  .innerList {
+    margin: 56px 16px auto 16px;
+  }
+  .logoDiv p {
+    margin-top: 40px;
+    font-size: 16px;
+    display: none;
+  }
+  .newChatContainer {
+    display: flex;
+    flex-direction: column;
+    margin-top: 2.2rem;
+  }
+  .newChatContainer .newChat,
+  .newChatContainer .activeChat {
+    height: 40px;
+    padding: 8px 10px;
+  }
+  .newChatContainer .newChat span,
+  .newChatContainer .activeChat span {
+    font-size: 12px;
+  }
+  .newChatContainer {
+    display: flex;
+    flex-direction: column;
+    margin-top: 2.2rem;
+  }
+  .listContainer ul li {
+    width: 100%;
+  }
+  .bottomUser .userDiv {
+    padding: 30px 16px;
+  }
+  .userDiv p {
+    font-size: 16px;
+  }
+  .mainPadding {
+    padding-top: 65px;
+  }
+  .message.user {
+    width: 70% !important;
+  }
+  .rightsideChat {
+    width: 100%;
+  }
+  .searchBarContainer {
+    padding: 15px;
+  }
+  .searchBar {
+    width: 100%;
+  }
+  .scrollingDiv .chatDiv {
+    width: 100%;
+    margin: 0 auto;
+    padding: 15px 15px 0 15px;
+    display: flex;
+    flex-direction: column;
+  }
+  .companyLogo {
+    position: absolute;
+    left: -43px;
+    top: 0;
+  }
+  
+.searchBarContainer .customSelect .optionsList {
+  position: absolute;
+  padding: 4px;
+  background: #252525;
+  box-shadow: 0px 0px 30px 0px rgba(0, 0, 0, 0.1);
+  border: none;
+  top: -103px;
+  right: 30px;
+  border-radius: 8px;
+}
+}
+
+.message-1 {
+  display: flex;
+  margin-left: auto;
+  margin-right: auto;
+  word-break: normal;
+  white-space: normal;
+  padding: 12px 16px;
+  border-radius: 10px;
+  gap: 20px;
+  align-items: start;
+  background: rgba(255, 255, 255, 0.2);
+  backdrop-filter: blur(12px);
+  color: #f5f5f5;
+}
+
+.message-1.user {
+  margin-left: auto;
+  margin-right: initial;
+  background: rgba(255, 255, 255, 0.2);
+}
+
+.message-1.bot {
+  margin-left: initial;
+  margin-right: auto;
+  background: transparent;
+}
+
+.modalBodyWrapper {
+  padding: 0px !important;
+}
+
+.audioBtn {
+  border-radius: 10px;
+  cursor: pointer;
+  border: none;
+  background: #252525;
+  backdrop-filter: blur(12px);
+  padding: 6px 10px;
+  font-family: Avenir;
+  color: #f5f5f5;
+}
+
+.audioBtnLoading {
+  background: transparent;
+  border-radius: 10px;
+  cursor: pointer;
+  border: 0px;
+  background: transparent;
+  backdrop-filter: blur(12px);
+  padding: 6px 10px;
+  font-family: Avenir;
+  color: #f5f5f5;
+}
+
+.loaderContainer {
+  display: flex;
+  flex-direction: row-reverse;
+  height: 2rem;
+  gap: 1.1rem;
+  align-items: center;
+}
+
+.loaderLogo {
+  margin-left: 0;
+}
+
+.disabledBtn {
+  opacity: 0.5;
+}
+
+.wrapperMic {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  /* background: rgba(0, 76, 151, 0.3);
+  border: 1px solid rgb(39 68 108);
+  border-radius: 10px; */
+}
+
+.iconwrapperMic {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  /* margin: 0 20px; */
+  /* color: #333; */
+  background: transparent;
+  box-shadow: 0 0 0px 0px rgba(255, 255, 255, 0.5);
+  cursor: pointer;
+  border-radius: 50%;
+  -webkit-border-radius: 50%;
+  -moz-border-radius: 50%;
+  -ms-border-radius: 50%;
+  -o-border-radius: 50%;
+  transition: 250ms color;
+  -webkit-transition: 250ms color;
+  -moz-transition: 250ms color;
+  -ms-transition: 250ms color;
+  -o-transition: 250ms color;
+  animation-name: wave;
+  animation-duration: 1s;
+  animation-timing-function: linear;
+  animation-iteration-count: infinite;
+}
+
+@keyframes wave {
+  0% {
+    box-shadow: 0 0 0px 0px rgba(255, 255, 255, 0.5);
+  }
+  100% {
+    box-shadow: 0 0 0px 15px rgba(255, 255, 255, 0);
+  }
+}
+
+.imageContainer {
+  display: flex;
+  justify-content: center;
+  margin: 10px 0;
+}
+
+.generatedImage {
+  max-width: 100%;
+  height: auto;
+  border-radius: 8px;
+}
+
+.loaderContainerMain {
+  height: 100%;
+  justify-content: center;
+  display: flex;
+  align-items: center;
+}

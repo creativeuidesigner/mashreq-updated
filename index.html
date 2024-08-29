@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <link
+      rel="icon"
+      type="image/svg+xml"
+      href="./src/pages/chat/images/author-icon.png"
+    />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests">
+    <title>LALS GROUP GPT</title>
+  </head>
+  <body>
+    <div id="root"></div>
+    <script>
+      if (!window.MediaRecorder) {
+        document.write(
+          decodeURI('%3Cscript defer src="/polyfill.js">%3C/script>')
+        );
+      }
+    </script>
+    <script type="module" src="/src/main.jsx"></script>
+  </body>
+</html>
