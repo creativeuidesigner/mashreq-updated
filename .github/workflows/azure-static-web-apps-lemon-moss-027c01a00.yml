@@ -32,6 +32,10 @@ jobs:
           api_location: "" # Api source code path - optional
           output_location: "dist" # Built app content directory - optional
           ###### End of Repository/Build Configurations ######
+        env: # Add environment variables here
+          REACT_APP_OPEN_AI_KEY: ${{ secrets.REACT_APP_OPEN_AI_KEY}}
+          REACT_APP_API_KEY: ${{ secrets.REACT_APP_API_KEY}}
+          REACT_APP_API_LOCATION: ${{ secrets.REACT_APP_API_LOCATION}}
 
   close_pull_request_job:
     if: github.event_name == 'pull_request' && github.event.action == 'closed'
