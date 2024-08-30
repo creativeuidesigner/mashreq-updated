@@ -929,3 +929,7 @@
   display: flex;
   align-items: center;
 }
+
+table {
+  color: black;
+}
