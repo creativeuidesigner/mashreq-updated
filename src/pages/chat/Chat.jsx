@@ -31,8 +31,9 @@ import Loader from "../../components/Loader";
 import {
   baseURLGenai,
   openAiURL,
-  baseURLGenaiDB,
-  baseURLGenaiDOC,
+  // baseURLGenaiDB,
+
+  baseURL,
 } from "../../connection/config/url";
 import {
   AudioConfig,
@@ -165,9 +166,14 @@ export default function Chat() {
     if (recognisedQuestion.trim() === "") return;
     setLoading(true);
     const username = localStorage.getItem("username") || "User";
-    const url = `${
-      selectedValue == "Document" ? baseURLGenaiDOC : baseURLGenaiDB
-    }`;
+    let url;
+
+    if(selectedValue == "Document") {
+      url = `${baseURL}q_a_rag_filtered`
+    }else{
+      url = `${baseURLGenai}rag` 
+    }
+
     let query = recognisedQuestion;
 
     addMessage(recognisedQuestion, "user");
@@ -185,7 +191,7 @@ export default function Chat() {
       });
       const messagesCollection = [];
       const saveCollection = [];
-      if (payloadDataText === true) {
+      if (payloadDataText === true && selectedValue != "Document") {
         const processEntity = async (entity) => {
           if (entity?.type === "text") {
             const dataSet = entity.text.value.replace(/\n/g, "<br>");
@@ -366,9 +372,17 @@ export default function Chat() {
 
     setLoading(true);
     const username = localStorage.getItem("username") || "User";
-    const url = `${
-      selectedValue == "Document" ? baseURLGenaiDOC : baseURLGenaiDB
-    }`;
+    // const url = `${
+    //   selectedValue == "Document" ? baseURLGenaiDOC : baseURLGenaiDB
+    // }`;
+
+    let url;
+
+    if(selectedValue == "Document") {
+      url = `${baseURL}q_a_rag_filtered`
+    }else{
+      url = `${baseURLGenai}rag` 
+    }
 
     const apiResponse = await axios.get(url, {
       params: {
@@ -382,7 +396,7 @@ export default function Chat() {
     const messagesCollection = [];
     const saveCollection = [];
 
-    if (payloadDataText === true) {
+    if (payloadDataText === true && selectedValue != "Document") {
       const processEntity = async (entity) => {
         if (entity?.type === "text") {
           const dataSet = entity.text.value.replace(/\n/g, "<br>");

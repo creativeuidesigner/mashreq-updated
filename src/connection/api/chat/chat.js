@@ -5,7 +5,7 @@ export const uploadFileAPI = async (payload) => {
   try {
     return new Promise((resolve, reject) => {
       axios
-        .post(`${baseUploadURL}`, payload, {
+        .post(`${baseURL}upload`, payload, {
           headers: {
             accept: "application/json",
             "Content-Type": `multipart/form-data`,
