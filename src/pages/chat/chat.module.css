@@ -607,8 +607,8 @@
 
 /* Media Queries for Responsiveness */
 
-@media only screen and (min-width: 769px)and (max-width: 1000px) {
-  .scrollingDiv .chatDiv{
+@media only screen and (min-width: 769px) and (max-width: 1000px) {
+  .scrollingDiv .chatDiv {
     width: 100%;
   }
   .scrollingDiv .chatDiv {
@@ -620,7 +620,7 @@
   .searchBarContainer {
     padding: 0 20px 30px 20px;
   }
-  .mainPadding{
+  .mainPadding {
     padding-top: 70px;
   }
 }
@@ -650,7 +650,7 @@
     margin-top: 56px;
     font-size: 18px;
   }
-  .newChatContainer{
+  .newChatContainer {
     margin-top: 3rem;
   }
   .newChatContainer .newChat,
@@ -785,17 +785,17 @@
     left: -43px;
     top: 0;
   }
-  
-.searchBarContainer .customSelect .optionsList {
-  position: absolute;
-  padding: 4px;
-  background: #252525;
-  box-shadow: 0px 0px 30px 0px rgba(0, 0, 0, 0.1);
-  border: none;
-  top: -103px;
-  right: 30px;
-  border-radius: 8px;
-}
+
+  .searchBarContainer .customSelect .optionsList {
+    position: absolute;
+    padding: 4px;
+    background: #252525;
+    box-shadow: 0px 0px 30px 0px rgba(0, 0, 0, 0.1);
+    border: none;
+    top: -103px;
+    right: 30px;
+    border-radius: 8px;
+  }
 }
 
 .message-1 {
@@ -932,4 +932,8 @@
 
 table {
   color: black;
+}
+
+code {
+  background: #252525 !important;
 }

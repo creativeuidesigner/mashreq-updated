@@ -170,7 +170,7 @@ export default function Chat() {
     if (selectedValue == "Document") {
       url = `${baseURL}q_a_rag_filtered`;
     } else {
-      url = `${baseURLGenai}rag`;
+      url = `${baseURLGenai}`;
     }
 
     let query = recognisedQuestion;
@@ -185,80 +185,68 @@ export default function Chat() {
       apiResponse = await axios.get(url, {
         params: {
           question: query,
-          username: username,
+          username: "genai@mashreq.com",
         },
       });
+
       const messagesCollection = [];
       const saveCollection = [];
-      if (payloadDataText === true && selectedValue != "Document") {
-        const processEntity = async (entity) => {
-          if (entity?.type === "text") {
-            const dataSet = entity.text.value.replace(/\n/g, "<br>");
-            saveCollection.push(dataSet);
-            return dataSet;
-          } else if (entity?.type === "image_file") {
-            const imageUrl = await getImageFromFileId(
-              entity?.image_file?.file_id
-            );
-            saveCollection.push(`{{${entity?.image_file?.file_id}}}`);
-            // // Construct a regular expression to match the <img> tag while focusing on the 'alt' part
-            // const regex = new RegExp(`<img src="[^"]*" alt="\\\${${dynamicPattern}}"\\/>`, 'g');
+      const responseData = apiResponse?.data?.return_values;
 
-            // // Replace the matched string with the dynamic replacement
-            // const updatedContent = content.replace(regex, `{{${dynamicPattern}}}`);
-            // console.log("updatedContent", updatedContent);
-
-            return `<img src="${imageUrl}" alt="${entity?.image_file?.file_id}"/> <br>`;
-            // const convertBlobToBase64 = (blob) => {
-            //   return new Promise((resolve, reject) => {
-            //     const reader = new FileReader();
-            //     reader.onloadend = () => {
-            //       const base64data = reader.result;
-            //       resolve(base64data);
-            //     };
-            //     reader.onerror = reject;
-            //     reader.readAsDataURL(blob);
-            //   });
-            // };
-
-            // const imageBlob = new Blob([imageDetails.data], {
-            //   type: "image/png",
-            // });
-            // const base64 = await convertBlobToBase64(imageBlob);
-          }
-        };
-
-        const processEntities = async () => {
-          const promises = apiResponse?.data?.return_values?.output.map(
-            async (entity) => {
-              const message = await processEntity(entity);
-
-              return message;
-            }
+      // Function to process image entities
+      const processImage = async (entity) => {
+        if (entity?.type === "image_file") {
+          const imageUrl = await getImageFromFileId(
+            entity?.image_file?.file_id
           );
+          saveCollection.push(`{{${entity?.image_file?.file_id}}}`);
+          return `<img src="${imageUrl}" alt="${entity?.image_file?.file_id}"/> <br>`;
+        }
+      };
 
-          // Wait for all promises to resolve and collect messages in the correct order
+      // Function to process text entities
+      const processText = (entity) => {
+        if (entity?.type === "text") {
+          const dataSet = entity.text.value.replace(/\n/g, "<br>");
+          saveCollection.push(dataSet);
+          return dataSet;
+        }
+      };
+
+      // Check if the API response contains images and/or text
+      if (responseData && Array.isArray(responseData.output)) {
+        const processEntities = async () => {
+          const promises = responseData.output.map(async (entity) => {
+            if (entity.type === "image_file") {
+              return processImage(entity);
+            } else if (entity.type === "text") {
+              return processText(entity);
+            }
+          });
+
           const messages = await Promise.all(promises);
 
-          // Add all messages to the collection
           messages.forEach((message) => messagesCollection.push(message));
         };
 
-        // Start processing
-        processEntities().then(() => {
-          // const concatenatedMessage = messagesCollection.join("<br>");
-          const concatenatedMessageSave = saveCollection.join("<br>");
-          addMessage(concatenatedMessageSave, "bot");
-          saveChat(recognisedQuestion, concatenatedMessageSave);
-        });
+        await processEntities();
+
+        const concatenatedMessageSave = saveCollection.join("<br>");
+        addMessage(concatenatedMessageSave, "bot");
+        saveChat(recognisedQuestion, concatenatedMessageSave);
+      } else if (typeof responseData?.output === "string") {
+        // If no image, display the output text as a message
+        const outputText = responseData.output.replace(/\n/g, "<br>");
+        addMessage(outputText, "bot");
+        saveChat(recognisedQuestion, outputText);
       } else {
-        const planText = await apiResponse?.data;
-        addMessage(planText, "bot");
-        saveChat(recognisedQuestion, planText);
+        addMessage("No relevant data found for chart creation.", "bot");
       }
     } catch (error) {
       console.log("error", error);
       addMessage("Oops, some error occurred", "bot");
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -362,8 +350,6 @@ export default function Chat() {
       if (filteredTextL2 == filteredAnswerL2) {
         return chat;
       }
-
-      // return  == answer
     });
     if (!chat) return;
     const selectedQues = chat?.user;
@@ -371,71 +357,75 @@ export default function Chat() {
 
     setLoading(true);
     const username = localStorage.getItem("username") || "User";
-    // const url = `${
-    //   selectedValue == "Document" ? baseURLGenaiDOC : baseURLGenaiDB
-    // }`;
 
     let url;
 
     if (selectedValue == "Document") {
       url = `${baseURL}q_a_rag_filtered`;
     } else {
-      url = `${baseURLGenai}rag`;
+      url = `${baseURLGenai}`;
     }
 
-    const apiResponse = await axios.get(url, {
-      params: {
-        question: selectedQues,
-        username: username,
-      },
-    });
+    try {
+      const apiResponse = await axios.get(url, {
+        params: {
+          question: selectedQues,
+          username: "genai@mashreq.com",
+        },
+      });
 
-    let payloadDataText = handlePayloadChart(selectedQues);
+      let payloadDataText = handlePayloadChart(selectedQues);
 
-    const messagesCollection = [];
-    const saveCollection = [];
+      const messagesCollection = [];
+      const saveCollection = [];
 
-    if (payloadDataText === true && selectedValue != "Document") {
-      const processEntity = async (entity) => {
-        if (entity?.type === "text") {
-          const dataSet = entity.text.value.replace(/\n/g, "<br>");
-          saveCollection.push(dataSet);
-          return dataSet;
-        } else if (entity?.type === "image_file") {
-          const imageUrl = await getImageFromFileId(
-            entity?.image_file?.file_id
-          );
-          saveCollection.push(`{{${entity?.image_file?.file_id}}}`);
-          return `<img src="${imageUrl}" alt="${entity?.image_file?.file_id}"/> <br>`;
-        }
-      };
+      // Check if the 'output' field exists and is an array
+      const output = apiResponse?.data?.return_values?.output;
 
-      const processEntities = async () => {
-        const promises = apiResponse?.data?.return_values?.output.map(
-          async (entity) => {
+      if (
+        payloadDataText === true &&
+        selectedValue !== "Document" &&
+        Array.isArray(output)
+      ) {
+        const processEntity = async (entity) => {
+          if (entity?.type === "text") {
+            const dataSet = entity.text.value.replace(/\n/g, "<br>");
+            saveCollection.push(dataSet);
+            return dataSet;
+          } else if (entity?.type === "image_file") {
+            const imageUrl = await getImageFromFileId(
+              entity?.image_file?.file_id
+            );
+            saveCollection.push(`{{${entity?.image_file?.file_id}}}`);
+            return `<img src="${imageUrl}" alt="${entity?.image_file?.file_id}"/> <br>`;
+          }
+        };
+
+        const processEntities = async () => {
+          const promises = output.map(async (entity) => {
             const message = await processEntity(entity);
             return message;
-          }
-        );
+          });
 
-        // Wait for all promises to resolve and collect messages in the correct order
-        const messages = await Promise.all(promises);
+          const messages = await Promise.all(promises);
+          messages.forEach((message) => messagesCollection.push(message));
+        };
 
-        // Add all messages to the collection
-        messages.forEach((message) => messagesCollection.push(message));
-      };
-
-      // Start processing
-      processEntities().then(() => {
-        const concatenatedMessage = saveCollection.join("<br>");
-        // console.log("concatenatedMessage", concatenatedMessage);
-        addMessage(concatenatedMessage, "bot");
-        saveChat(recognisedQuestion, concatenatedMessage);
-      });
-    } else {
-      const planText = await apiResponse?.data;
-      addMessage(planText, "bot");
-      saveChat(recognisedQuestion, planText);
+        processEntities().then(() => {
+          const concatenatedMessageSave = saveCollection.join("<br>");
+          addMessage(concatenatedMessageSave, "bot");
+          saveChat(selectedQues, concatenatedMessageSave);
+        });
+      } else {
+        // If no output array, fallback to plain text response
+        const planText =
+          (await apiResponse?.data?.return_values?.output) || apiResponse?.data;
+        addMessage(planText, "bot");
+        saveChat(selectedQues, planText);
+      }
+    } catch (error) {
+      console.log("error", error);
+      addMessage("Oops, some error occurred", "bot");
     }
   };
 
