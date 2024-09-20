@@ -175,6 +175,10 @@ export default function Chat() {
 
     let query = recognisedQuestion;
 
+    if (query) {
+      query +=
+        ".If in response output is not array then provide me response in single line";
+    }
     addMessage(recognisedQuestion, "user");
     setRecognisedQuestion("");
     setLastQuestion(recognisedQuestion);
