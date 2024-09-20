@@ -32,7 +32,6 @@ import {
   baseURLGenai,
   openAiURL,
   // baseURLGenaiDB,
-
   baseURL,
 } from "../../connection/config/url";
 import {
@@ -168,10 +167,10 @@ export default function Chat() {
     const username = localStorage.getItem("username") || "User";
     let url;
 
-    if(selectedValue == "Document") {
-      url = `${baseURL}q_a_rag_filtered`
-    }else{
-      url = `${baseURLGenai}rag` 
+    if (selectedValue == "Document") {
+      url = `${baseURL}q_a_rag_filtered`;
+    } else {
+      url = `${baseURLGenai}rag`;
     }
 
     let query = recognisedQuestion;
@@ -378,10 +377,10 @@ export default function Chat() {
 
     let url;
 
-    if(selectedValue == "Document") {
-      url = `${baseURL}q_a_rag_filtered`
-    }else{
-      url = `${baseURLGenai}rag` 
+    if (selectedValue == "Document") {
+      url = `${baseURL}q_a_rag_filtered`;
+    } else {
+      url = `${baseURLGenai}rag`;
     }
 
     const apiResponse = await axios.get(url, {
